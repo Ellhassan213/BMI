@@ -1,3 +1,13 @@
+:root {
+  --black: #150605;
+  --red: #EA453C;
+  --pink: #F47B6E;
+  --light-blue: #EFFBFE;
+  --blue: #63D5DA;
+  --green: #04AA6D;
+  --white: #FFFFFF;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +20,20 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.header {
+  background-color: var(--green);
+  padding: 15px 5px;
+}
+
+.form > input{
+  margin: 10px 5px;
+  width: 100px;
+}
+
+.chart {
+  margin: 10px 5px;
+  max-width: 600px;
+  max-height: 500px;
 }

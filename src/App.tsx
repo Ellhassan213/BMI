@@ -1,26 +1,59 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, ChangeEvent, SyntheticEvent } from 'react'
+import Header from './components/Header'
+import Form from './components/Form'
+import BmiChart from './components/BmiChart'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+interface IData {
+  labels: string[],
+  values: string[]
 }
 
-export default App;
+const App = () => {
+  const [weight, setWeight] = useState('')
+  const [height, setHeight] = useState('')
+  const [data, setData] = useState<IData>({
+    labels: [],
+    values: []
+  })
+
+  const calculateBMI = (weightKg: number, heightCm: number) => {
+    const heightM = heightCm / 100
+    const bmi = (weightKg / (heightM * heightM)).toFixed(2)
+    return bmi
+  }
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>, setInput: Function) => {
+    const { value } = event.target
+    setInput(value)
+  }
+
+  const handleSubmit = (event: SyntheticEvent) => {
+    event.preventDefault()
+    const bmi = calculateBMI(Number(weight), Number(height))
+    const nextLabel = 'Input ' + ((data.labels).length + 1)
+    setData({
+      labels: [...data.labels, nextLabel],
+      values: [...data.values, bmi]
+    })
+  }
+
+  return (
+    <div>
+      <Header />
+      <Form
+        weight={weight}
+        height={height}
+        setWeight={setWeight}
+        setHeight={setHeight}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+      />
+      <BmiChart
+        labels={data.labels}
+        values={data.values}
+      />
+    </div>
+  )
+}
+
+export default App
